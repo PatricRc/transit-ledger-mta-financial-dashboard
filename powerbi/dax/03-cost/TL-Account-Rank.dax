@@ -1,0 +1,6 @@
+TL Account Rank =
+VAR currentAccount = SELECTEDVALUE(tl_account[Account])
+VAR candidates = ADDCOLUMNS(ALL(tl_account[Account]), "@v", CALCULATE([TL Annual Variance]))
+VAR currentValue = [TL Annual Variance]
+RETURN IF(NOT ISBLANK(currentAccount) && NOT ISBLANK([TL Annual Actual]),
+  1 + COUNTROWS(FILTER(candidates, [@v] > currentValue || ([@v] = currentValue && tl_account[Account] < currentAccount))))

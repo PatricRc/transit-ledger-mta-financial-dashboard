@@ -1,0 +1,6 @@
+TL Driver 1 Peak Month =
+VAR a = [TL Driver 1 Name]
+VAR y = [TL Year]
+VAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)
+VAR rows = ADDCOLUMNS(months, "@v", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Variance], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m, REMOVEFILTERS(tl_account), tl_account[Account] = a))
+RETURN MAXX(TOPN(1, rows, [@v], DESC, tl_date[MonthNo], ASC), tl_date[MonthNo])

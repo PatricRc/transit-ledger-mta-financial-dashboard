@@ -1,0 +1,1033 @@
+{
+  "source_checks": 171,
+  "measure_count": 80,
+  "checks": [
+    {
+      "check": "2023 Actual",
+      "source": 9706.45186134,
+      "expected": 9706.45186134,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 1",
+      "source": 796.60693423,
+      "expected": 796.60693423,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 2",
+      "source": 748.76663515,
+      "expected": 748.76663515,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 3",
+      "source": 784.89679567,
+      "expected": 784.89679567,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 4",
+      "source": 787.38623493,
+      "expected": 787.38623493,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 5",
+      "source": 797.87858893,
+      "expected": 797.87858893,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 6",
+      "source": 778.27149805,
+      "expected": 778.27149805,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 7",
+      "source": 808.1061889499999,
+      "expected": 808.10618895,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 8",
+      "source": 772.91782548,
+      "expected": 772.91782548,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 9",
+      "source": 984.52076246,
+      "expected": 984.52076246,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 10",
+      "source": 780.35837628,
+      "expected": 780.35837628,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 11",
+      "source": 805.68321005,
+      "expected": 805.68321005,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Actual month 12",
+      "source": 861.05881116,
+      "expected": 861.05881116,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget",
+      "source": 9708.84411176,
+      "expected": 9708.84411176,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 1",
+      "source": 796.99261446,
+      "expected": 796.99261446,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 2",
+      "source": 764.7673214600001,
+      "expected": 764.7673214600001,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 3",
+      "source": 764.59922171,
+      "expected": 764.59922171,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 4",
+      "source": 777.53825662,
+      "expected": 777.53825662,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 5",
+      "source": 805.69357079,
+      "expected": 805.69357079,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 6",
+      "source": 791.71857026,
+      "expected": 791.71857026,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 7",
+      "source": 828.23982898,
+      "expected": 828.23982898,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 8",
+      "source": 800.46157396,
+      "expected": 800.46157396,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 9",
+      "source": 813.51716075,
+      "expected": 813.51716075,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 10",
+      "source": 825.3389243500001,
+      "expected": 825.33892435,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 11",
+      "source": 836.3206135199999,
+      "expected": 836.3206135199999,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Adopted Budget month 12",
+      "source": 903.6564549,
+      "expected": 903.6564549000001,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Overtime variance",
+      "source": 240.55081603,
+      "expected": 240.55081602999996,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Paratransit Service Contracts variance",
+      "source": 42.26243112999999,
+      "expected": 42.262431129999925,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Other Business Expenses variance",
+      "source": 20.682059089999996,
+      "expected": 20.68205908999998,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Claims variance",
+      "source": 17.959458159999986,
+      "expected": 17.959458159999997,
+      "status": "pass"
+    },
+    {
+      "check": "2023 Other Fringe Benefits variance",
+      "source": 15.542204210000037,
+      "expected": 15.542204210000136,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash",
+      "source": 1175.1866263299999,
+      "expected": 1175.18662633,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 1",
+      "source": 30.68947928,
+      "expected": 30.68947928,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 2",
+      "source": 29.810001990000004,
+      "expected": 29.810001990000004,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 3",
+      "source": 27.792740120000005,
+      "expected": 27.79274012,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 4",
+      "source": 26.48156214,
+      "expected": 26.48156214,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 5",
+      "source": 64.59619038,
+      "expected": 64.59619038,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 6",
+      "source": 30.98819745,
+      "expected": 30.98819745000001,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 7",
+      "source": 64.7977212,
+      "expected": 64.7977212,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 8",
+      "source": 32.22158435,
+      "expected": 32.22158435,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 9",
+      "source": 63.30717163999999,
+      "expected": 63.30717163999999,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 10",
+      "source": 26.905111489999996,
+      "expected": 26.905111489999996,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 11",
+      "source": 48.07850032999999,
+      "expected": 48.07850033,
+      "status": "pass"
+    },
+    {
+      "check": "2023 cash month 12",
+      "source": 729.51836596,
+      "expected": 729.51836596,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual",
+      "source": 502.32614956,
+      "expected": 502.32614956,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 1",
+      "source": 30.68947928,
+      "expected": 30.68947928,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 2",
+      "source": 29.810001990000004,
+      "expected": 29.810001990000004,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 3",
+      "source": 27.792740120000005,
+      "expected": 27.79274012,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 4",
+      "source": 26.48156214,
+      "expected": 26.48156214,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 5",
+      "source": 64.59619038,
+      "expected": 64.59619038,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 6",
+      "source": 30.988197449999994,
+      "expected": 30.988197449999998,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 7",
+      "source": 64.7977212,
+      "expected": 64.7977212,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 8",
+      "source": 32.22158435,
+      "expected": 32.22158435,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 9",
+      "source": 63.30717163999999,
+      "expected": 63.30717163999999,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 10",
+      "source": 26.905111489999996,
+      "expected": 26.905111489999996,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 11",
+      "source": 48.34138951999999,
+      "expected": 48.34138951999999,
+      "status": "pass"
+    },
+    {
+      "check": "2023 accrual month 12",
+      "source": 56.395,
+      "expected": 56.395,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual",
+      "source": 10460.622426380001,
+      "expected": 10460.62242638,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 1",
+      "source": 837.67366238,
+      "expected": 837.67366238,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 2",
+      "source": 788.53637614,
+      "expected": 788.53637614,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 3",
+      "source": 814.93806394,
+      "expected": 814.93806394,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 4",
+      "source": 816.1148222300001,
+      "expected": 816.11482223,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 5",
+      "source": 801.67579142,
+      "expected": 801.67579142,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 6",
+      "source": 806.7719478500001,
+      "expected": 806.7719478500001,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 7",
+      "source": 865.27395388,
+      "expected": 865.27395388,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 8",
+      "source": 795.0348603100001,
+      "expected": 795.03486031,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 9",
+      "source": 841.57658654,
+      "expected": 841.57658654,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 10",
+      "source": 866.1286422000001,
+      "expected": 866.1286422000001,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 11",
+      "source": 840.6932432899999,
+      "expected": 840.6932432899999,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Actual month 12",
+      "source": 1386.2044762,
+      "expected": 1386.2044762,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget",
+      "source": 9946.77569974,
+      "expected": 9946.77569974,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 1",
+      "source": 818.2285517,
+      "expected": 818.2285517,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 2",
+      "source": 761.88953607,
+      "expected": 761.88953607,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 3",
+      "source": 808.50952816,
+      "expected": 808.5095281600001,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 4",
+      "source": 798.36887212,
+      "expected": 798.36887212,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 5",
+      "source": 827.6957460499999,
+      "expected": 827.69574605,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 6",
+      "source": 805.05314139,
+      "expected": 805.05314139,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 7",
+      "source": 843.22172654,
+      "expected": 843.22172654,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 8",
+      "source": 807.92648102,
+      "expected": 807.92648102,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 9",
+      "source": 820.84676884,
+      "expected": 820.84676884,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 10",
+      "source": 835.2298851,
+      "expected": 835.2298851,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 11",
+      "source": 897.9826478,
+      "expected": 897.9826478,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Adopted Budget month 12",
+      "source": 921.82281495,
+      "expected": 921.82281495,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Claims variance",
+      "source": 563.71673992,
+      "expected": 563.71673992,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Overtime variance",
+      "source": 266.93973127,
+      "expected": 266.93973127,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Paratransit Service Contracts variance",
+      "source": 87.9428098,
+      "expected": 87.94280980000008,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Maintenance and Other Operating Contracts variance",
+      "source": 72.28565503999998,
+      "expected": 72.28565504,
+      "status": "pass"
+    },
+    {
+      "check": "2024 Materials and Supplies variance",
+      "source": 34.76981984000001,
+      "expected": 34.769819840000025,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash",
+      "source": 987.05850994,
+      "expected": 987.05850994,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 1",
+      "source": 29.94228548,
+      "expected": 29.942285480000002,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 2",
+      "source": 31.286449449999996,
+      "expected": 31.28644945,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 3",
+      "source": 26.325679100000002,
+      "expected": 26.325679100000002,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 4",
+      "source": 31.080560389999995,
+      "expected": 31.08056039,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 5",
+      "source": 62.21201301,
+      "expected": 62.21201301,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 6",
+      "source": 34.5806725,
+      "expected": 34.5806725,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 7",
+      "source": 64.54797282999999,
+      "expected": 64.54797283,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 8",
+      "source": 34.86988908,
+      "expected": 34.86988908,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 9",
+      "source": 61.03655971,
+      "expected": 61.036559710000006,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 10",
+      "source": 32.15774839,
+      "expected": 32.15774839,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 11",
+      "source": 45.72360008,
+      "expected": 45.72360008,
+      "status": "pass"
+    },
+    {
+      "check": "2024 cash month 12",
+      "source": 533.29507992,
+      "expected": 533.29507992,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual",
+      "source": 491.29192111000003,
+      "expected": 491.29192111000003,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 1",
+      "source": 29.885559110000003,
+      "expected": 29.885559110000003,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 2",
+      "source": 31.343979799999996,
+      "expected": 31.343979799999996,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 3",
+      "source": 26.277711290000003,
+      "expected": 26.277711290000003,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 4",
+      "source": 31.06842344,
+      "expected": 31.06842344,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 5",
+      "source": 62.24949786,
+      "expected": 62.249497860000005,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 6",
+      "source": 35.02333877,
+      "expected": 35.02333877,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 7",
+      "source": 64.54797282999999,
+      "expected": 64.54797283,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 8",
+      "source": 34.86988908,
+      "expected": 34.86988908,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 9",
+      "source": 61.03655971,
+      "expected": 61.036559710000006,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 10",
+      "source": 32.15774839,
+      "expected": 32.15774839,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 11",
+      "source": 45.72360008,
+      "expected": 45.72360008,
+      "status": "pass"
+    },
+    {
+      "check": "2024 accrual month 12",
+      "source": 37.10764075,
+      "expected": 37.107640749999995,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual",
+      "source": 10967.55659633,
+      "expected": 10967.55659633,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 1",
+      "source": 880.08379514,
+      "expected": 880.08379514,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 2",
+      "source": 850.8734491900001,
+      "expected": 850.87344919,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 3",
+      "source": 811.32880663,
+      "expected": 811.3288066299999,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 4",
+      "source": 889.19183216,
+      "expected": 889.19183216,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 5",
+      "source": 859.20375298,
+      "expected": 859.2037529800001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 6",
+      "source": 905.97290894,
+      "expected": 905.97290894,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 7",
+      "source": 919.43854706,
+      "expected": 919.43854706,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 8",
+      "source": 939.82840725,
+      "expected": 939.8284072499999,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 9",
+      "source": 935.43346518,
+      "expected": 935.43346518,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 10",
+      "source": 850.94224248,
+      "expected": 850.94224248,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 11",
+      "source": 819.89111802,
+      "expected": 819.89111802,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Actual month 12",
+      "source": 1305.3682713,
+      "expected": 1305.3682713,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget",
+      "source": 10603.85220584,
+      "expected": 10603.85220584,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 1",
+      "source": 878.06652932,
+      "expected": 878.06652932,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 2",
+      "source": 833.39928862,
+      "expected": 833.39928862,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 3",
+      "source": 834.08837339,
+      "expected": 834.08837339,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 4",
+      "source": 859.38370425,
+      "expected": 859.3837042499999,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 5",
+      "source": 883.1217043400001,
+      "expected": 883.1217043400001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 6",
+      "source": 867.36944164,
+      "expected": 867.36944164,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 7",
+      "source": 903.84130976,
+      "expected": 903.84130976,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 8",
+      "source": 862.49064095,
+      "expected": 862.4906409499999,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 9",
+      "source": 881.17921123,
+      "expected": 881.17921123,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 10",
+      "source": 891.73443909,
+      "expected": 891.73443909,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 11",
+      "source": 893.1094778099999,
+      "expected": 893.10947781,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Adopted Budget month 12",
+      "source": 1016.06808544,
+      "expected": 1016.06808544,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Claims variance",
+      "source": 409.27454395999996,
+      "expected": 409.27454396,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Overtime variance",
+      "source": 257.93861651,
+      "expected": 257.93861651000003,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Paratransit Service Contracts variance",
+      "source": 101.93539354000002,
+      "expected": 101.93539353999995,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Electric Power variance",
+      "source": 34.922463670000006,
+      "expected": 34.92246367000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 Professional Services Contracts variance",
+      "source": 29.06487204,
+      "expected": 29.06487204000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash",
+      "source": 933.14518836,
+      "expected": 933.14518836,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 1",
+      "source": 42.528742130000005,
+      "expected": 42.528742130000005,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 2",
+      "source": 35.58789088,
+      "expected": 35.58789088,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 3",
+      "source": 23.992489420000002,
+      "expected": 23.992489420000005,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 4",
+      "source": 49.863529619999994,
+      "expected": 49.86352962,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 5",
+      "source": 72.45469976000001,
+      "expected": 72.45469976,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 6",
+      "source": 40.37748191000001,
+      "expected": 40.377481910000014,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 7",
+      "source": 67.13270404000001,
+      "expected": 67.13270404000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 8",
+      "source": 52.17110573,
+      "expected": 52.17110573000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 9",
+      "source": 71.18294743,
+      "expected": 71.18294743,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 10",
+      "source": 38.62265054,
+      "expected": 38.62265054,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 11",
+      "source": 59.22554951000001,
+      "expected": 59.22554951,
+      "status": "pass"
+    },
+    {
+      "check": "2025 cash month 12",
+      "source": 380.00539739,
+      "expected": 380.00539739,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual",
+      "source": 947.5834132,
+      "expected": 947.5834132,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 1",
+      "source": 42.52874213,
+      "expected": 42.52874213,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 2",
+      "source": 35.58789088,
+      "expected": 35.58789088,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 3",
+      "source": 23.992489420000002,
+      "expected": 23.99248942,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 4",
+      "source": 49.863529619999994,
+      "expected": 49.86352962,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 5",
+      "source": 72.45469976,
+      "expected": 72.45469976,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 6",
+      "source": 40.377481910000014,
+      "expected": 40.377481910000014,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 7",
+      "source": 67.13270404000001,
+      "expected": 67.13270404000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 8",
+      "source": 52.171105729999994,
+      "expected": 52.17110573,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 9",
+      "source": 71.18294743000001,
+      "expected": 71.18294743000001,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 10",
+      "source": 38.62265054000001,
+      "expected": 38.62265054,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 11",
+      "source": 59.22554951,
+      "expected": 59.22554951,
+      "status": "pass"
+    },
+    {
+      "check": "2025 accrual month 12",
+      "source": 394.44362223,
+      "expected": 394.44362223,
+      "status": "pass"
+    }
+  ],
+  "dax_engine_validation": "Not executed; requires Power BI Desktop or a connected Analysis Services model."
+}

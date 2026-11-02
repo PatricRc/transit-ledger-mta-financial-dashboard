@@ -1,0 +1,9 @@
+{
+  "name": "transit-ledger-chart-validation",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "vega": "5.33.1",
+    "vega-lite": "5.23.0"
+  }
+}

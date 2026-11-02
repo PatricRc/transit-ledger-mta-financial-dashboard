@@ -1,0 +1,2 @@
+tl_account =
+DISTINCT ( SELECTCOLUMNS ( FILTER(tl_operations, tl_operations[type] = "Total Expenses Before Non-Cash Liability Adjs." && tl_operations[expense_type] = "NREIMB"), "Account", tl_operations[general_ledger] ) )

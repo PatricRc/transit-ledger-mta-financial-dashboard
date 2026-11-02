@@ -1,0 +1,2 @@
+TL Annual Coverage Pct =
+DIVIDE([TL Annual Cash], [TL Annual Accrual])

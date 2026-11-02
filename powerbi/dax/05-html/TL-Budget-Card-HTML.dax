@@ -1,0 +1,5 @@
+TL Budget Card HTML =
+VAR valueText = "$" & FORMAT(ABS([TL Annual Variance])/1000000,"#,0.0") & "M"
+VAR contextText = FORMAT(ABS([TL Annual Variance Pct]),"0.0%") & IF([TL Annual Variance]>=0," above plan"," below plan")
+RETURN IF([TL Valid Year] <> 1, "<p>Select one year.</p>",
+"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#faeee9;border-top:3px solid #cf493a;color:#18232b'><div style='font-size:13px;font-weight:600'>Budget variance</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#cf493a'>" & valueText & "</div><div style='font-size:12px;color:#53616a'>" & contextText & "</div>" & "<div style='height:55px;width:160px;margin-left:auto'>" & [TL Variance Spark HTML] & "</div>" & "</div>")

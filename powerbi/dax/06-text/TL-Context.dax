@@ -1,0 +1,2 @@
+TL Context =
+"NYCT · " & FORMAT([TL Year],"0") & " · USD · static 2023–2025 snapshot"

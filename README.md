@@ -2,7 +2,7 @@
 
 A three-page financial analytics portfolio project exploring operating expenses, budget pressure, and subsidy funding for **NYC Transit, 2023–2025**.
 
-**Current deliverable:** an interactive, standalone HTML dashboard built with real MTA Open Data. The Power BI report is a work in progress; this repository does not contain a `.pbix` file, saved Power Query scripts, or DAX measures.
+**Current deliverable:** an interactive, standalone HTML dashboard built with real MTA Open Data. The Power BI report is a work in progress; this repository does not contain a `.pbix` file or an assembled semantic model. Power Query loaders, 80 authored DAX measures and coded visual templates are now available in [`powerbi/`](powerbi/README.md), pending Desktop integration and DAX engine verification.
 
 ![Performance dashboard](screenshots/performance.png)
 
@@ -104,3 +104,7 @@ screenshots/funding.png       Funding page
 ```
 
 Public availability of this portfolio does not replace the original data provider's terms. Consult the linked sources for current data and usage conditions. No affiliation with or endorsement by MTA is implied.
+
+## Build this in Power BI
+
+Start with the [Power BI build kit](powerbi/README.md): 80 DAX measures, Power Query source loaders, six Deneb charts, HTML/SVG cards, theme, vector backgrounds, bulk measure importer and page-by-page field mapping. The kit has source-arithmetic checks and chart compilation checks; Power BI Desktop integration remains to be completed.

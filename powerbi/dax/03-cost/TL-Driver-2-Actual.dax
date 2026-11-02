@@ -1,0 +1,3 @@
+TL Driver 2 Actual =
+VAR a = [TL Driver 2 Name]
+RETURN CALCULATE([TL Annual Actual], REMOVEFILTERS(tl_account), tl_account[Account] = a)

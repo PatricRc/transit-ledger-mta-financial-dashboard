@@ -1,0 +1,2 @@
+TL Cash M =
+DIVIDE([TL Cash],1000000)

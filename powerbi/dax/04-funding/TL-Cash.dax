@@ -1,0 +1,4 @@
+TL Cash =
+IF([TL Valid Year] = 1, CALCULATE(SUM(tl_subsidies[amount]),
+ tl_subsidies[scenario] = "Actual", tl_subsidies[expense_type] = "Cash",
+ tl_subsidies[type] = "Total Dedicated Taxes & State and Local Subsidies"))

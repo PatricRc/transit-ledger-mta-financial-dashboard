@@ -1,0 +1,3 @@
+TL Driver 1 Spark HTML =
+VAR a = [TL Driver 1 Name]
+RETURN CALCULATE([TL Variance Spark HTML], REMOVEFILTERS(tl_account), tl_account[Account] = a)

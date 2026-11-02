@@ -1,0 +1,2 @@
+TL Performance Title =
+IF([TL Valid Year] <> 1, "Select one reporting year", "Expenses finished $" & FORMAT(ABS([TL Annual Variance])/1000000,"#,0.0") & "M " & IF([TL Annual Variance]>=0,"above","below") & " adopted budget.")

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "name": "dataset"
+  },
+  "width": "container",
+  "height": 300,
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "gridColor": "#e3e3e3",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 12,
+      "titleFont": "Segoe UI"
+    },
+    "background": "white"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 4
+      },
+      "encoding": {
+        "x": {
+          "field": "TL Cost Actual Display",
+          "type": "quantitative",
+          "scale": {
+            "zero": true
+          },
+          "title": "USD millions; index mode: 1.0 = adopted budget"
+        },
+        "color": {
+          "condition": {
+            "test": "datum[\"TL Account Rank\"] === 1",
+            "value": "#cf493a"
+          },
+          "value": "#778b98"
+        },
+        "tooltip": [
+          {
+            "field": "Account",
+            "type": "nominal"
+          },
+          {
+            "field": "TL Actual M",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "TL Budget M",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "TL Variance M",
+            "type": "quantitative",
+            "format": "+,.1f"
+          },
+          {
+            "field": "TL Account Index",
+            "type": "quantitative",
+            "format": ".1%"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "tick",
+        "color": "#18232b",
+        "thickness": 3,
+        "size": 26
+      },
+      "encoding": {
+        "x": {
+          "field": "TL Cost Budget Display",
+          "type": "quantitative"
+        }
+      }
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "AccountOrder",
+      "type": "nominal",
+      "sort": "ascending",
+      "axis": {
+        "title": null,
+        "labelLimit": 210
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum[\"TL Account Rank\"] + \" · \" + datum.Account",
+      "as": "AccountOrder"
+    }
+  ]
+}

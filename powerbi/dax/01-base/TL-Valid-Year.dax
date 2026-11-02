@@ -1,0 +1,2 @@
+TL Valid Year =
+INT ( HASONEVALUE(tl_date[Year]) )

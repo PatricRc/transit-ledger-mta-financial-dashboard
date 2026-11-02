@@ -1,0 +1,2 @@
+TL Bridge Label =
+SWITCH(SELECTEDVALUE(tl_bridge[Step]),1,[TL Driver 1 Name],2,[TL Driver 2 Name],3,[TL Driver 3 Name],4,"Other net",5,"Net variance")

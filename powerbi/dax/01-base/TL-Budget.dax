@@ -1,0 +1,7 @@
+TL Budget =
+IF ( [TL Valid Year] = 1,
+ CALCULATE ( SUM(tl_operations[amount]),
+    tl_operations[scenario] = "Adopted Budget",
+    tl_operations[expense_type] = "NREIMB",
+    tl_operations[type] = "Total Expenses Before Non-Cash Liability Adjs."
+ ) )

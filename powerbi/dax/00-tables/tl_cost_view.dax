@@ -1,0 +1,2 @@
+tl_cost_view =
+DATATABLE("View", STRING, {{"$ Amount"},{"% Index"}})

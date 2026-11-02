@@ -1,0 +1,14 @@
+-- Run as a query in DAX Query View after importing measures and relationships.
+-- Compare with source-results.json and the expected figures in README.md.
+EVALUATE
+SUMMARIZECOLUMNS(
+    tl_date[Year],
+    "Actual", [TL Annual Actual],
+    "Budget", [TL Annual Budget],
+    "Variance", [TL Annual Variance],
+    "Driver1", [TL Driver 1 Name],
+    "Cash", [TL Annual Cash],
+    "Accrual", [TL Annual Accrual],
+    "Coverage", [TL Annual Coverage Pct]
+)
+ORDER BY tl_date[Year]

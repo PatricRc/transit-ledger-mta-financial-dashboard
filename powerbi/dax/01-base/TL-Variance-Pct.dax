@@ -1,0 +1,2 @@
+TL Variance Pct =
+DIVIDE([TL Variance], [TL Budget])

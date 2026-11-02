@@ -1,0 +1,2 @@
+TL Year =
+SELECTEDVALUE(tl_date[Year])

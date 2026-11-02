@@ -1,0 +1,3 @@
+TL December Variance =
+VAR y = [TL Year]
+RETURN IF([TL Valid Year] = 1, CALCULATE([TL Variance], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12))

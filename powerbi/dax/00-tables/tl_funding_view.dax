@@ -1,0 +1,2 @@
+tl_funding_view =
+DATATABLE("View", STRING, {{"$ Gap"},{"% Coverage"}})

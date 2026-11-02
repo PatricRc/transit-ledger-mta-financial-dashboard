@@ -1,0 +1,2 @@
+TL Coverage Title =
+"Cash covered " & FORMAT([TL Annual Coverage Pct],"0.0%") & " of annual accrual"

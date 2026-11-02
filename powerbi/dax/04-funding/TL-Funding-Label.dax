@@ -1,0 +1,2 @@
+TL Funding Label =
+IF(SELECTEDVALUE(tl_funding_view[View], "$ Gap") = "% Coverage", FORMAT([TL Coverage Pct],"0.0%"), FORMAT([TL Funding Gap M],"0.0;−0.0;0.0") & "M")

@@ -1,0 +1,2 @@
+TL Funding Title =
+IF([TL Valid Year] <> 1, "Select one reporting year", "Cash was $" & FORMAT(ABS([TL Annual Funding Gap])/1000000,"#,0.0") & "M " & IF([TL Annual Funding Gap]>=0,"below","above") & " accrued subsidies.")

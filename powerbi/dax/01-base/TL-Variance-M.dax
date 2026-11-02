@@ -1,0 +1,2 @@
+TL Variance M =
+DIVIDE([TL Variance], 1000000)

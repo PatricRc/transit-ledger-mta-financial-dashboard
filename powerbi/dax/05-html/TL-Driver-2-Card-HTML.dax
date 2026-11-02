@@ -1,0 +1,5 @@
+TL Driver 2 Card HTML =
+VAR valueText = FORMAT([TL Driver 2 Variance]/1000000,"+$#,0.0;−$#,0.0;$0.0") & "M"
+VAR contextText = [TL Driver 2 Name]
+RETURN IF([TL Valid Year] <> 1, "<p>Select one year.</p>",
+"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Driver 2 variance</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>" & valueText & "</div><div style='font-size:12px;color:#53616a'>" & contextText & "</div>" & "</div>")

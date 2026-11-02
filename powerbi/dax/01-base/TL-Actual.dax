@@ -1,0 +1,7 @@
+TL Actual =
+IF ( [TL Valid Year] = 1,
+ CALCULATE ( SUM(tl_operations[amount]),
+    tl_operations[scenario] = "Actual",
+    tl_operations[expense_type] = "NREIMB",
+    tl_operations[type] = "Total Expenses Before Non-Cash Liability Adjs."
+ ) )

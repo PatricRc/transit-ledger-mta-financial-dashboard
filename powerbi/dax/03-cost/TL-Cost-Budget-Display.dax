@@ -1,0 +1,2 @@
+TL Cost Budget Display =
+IF(SELECTEDVALUE(tl_cost_view[View], "$ Amount") = "% Index", 1, [TL Budget M])

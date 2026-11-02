@@ -1,0 +1,10 @@
+TL Cash Spark HTML =
+VAR y = [TL Year]
+VAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)
+VAR points = ADDCOLUMNS(months, "@v", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Cash M], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m))
+VAR low = MINX(points, [@v])
+VAR high = MAX(0, MAXX(points, [@v]))
+VAR span = MAX(high-low, 0.00001)
+VAR marks = CONCATENATEX(points,
+ FORMAT((tl_date[MonthNo]-1)*14+2,"0", "en-US") & "," & FORMAT(53-48*DIVIDE([@v]-low,span),"0.0", "en-US"), " ", tl_date[MonthNo], ASC)
+RETURN IF([TL Valid Year]=1, "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 60' role='img' aria-label='Monthly trend, separate scale'><polyline points='" & marks & "' fill='none' stroke='#778b98' stroke-width='2.5'/></svg>")

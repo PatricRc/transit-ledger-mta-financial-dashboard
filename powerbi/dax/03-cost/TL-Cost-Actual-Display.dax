@@ -1,0 +1,2 @@
+TL Cost Actual Display =
+IF(SELECTEDVALUE(tl_cost_view[View], "$ Amount") = "% Index", [TL Account Index], [TL Actual M])

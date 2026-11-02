@@ -1,0 +1,12 @@
+TL Variance Spark HTML =
+VAR y = [TL Year]
+VAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)
+VAR points = ADDCOLUMNS(months, "@v", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Variance M], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m))
+VAR low = MIN(0, MINX(points, [@v]))
+VAR high = MAX(0, MAXX(points, [@v]))
+VAR span = MAX(high-low, 0.00001)
+VAR marks = CONCATENATEX(points,
+ VAR yy = 53 - 48 * DIVIDE([@v]-low,span)
+ VAR zeroY = 53 - 48 * DIVIDE(-low,span)
+ RETURN "<rect x='" & FORMAT((tl_date[MonthNo]-1)*14+2,"0", "en-US") & "' y='" & FORMAT(MIN(yy,zeroY),"0.0", "en-US") & "' width='9' height='" & FORMAT(MAX(1,ABS(yy-zeroY)),"0.0", "en-US") & "' fill='" & IF([@v]>=0,"#cf493a","#526b7a") & "' />", "", tl_date[MonthNo], ASC)
+RETURN IF([TL Valid Year]=1, "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 60' role='img' aria-label='Monthly variance, separate scale'>" & marks & "</svg>")

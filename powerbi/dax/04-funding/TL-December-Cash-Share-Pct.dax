@@ -1,0 +1,4 @@
+TL December Cash Share Pct =
+VAR y = [TL Year]
+VAR decemberCash = CALCULATE([TL Cash], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12)
+RETURN DIVIDE(decemberCash, [TL Annual Cash])

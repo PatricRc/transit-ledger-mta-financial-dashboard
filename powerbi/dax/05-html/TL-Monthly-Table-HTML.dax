@@ -1,0 +1,5 @@
+TL Monthly Table HTML =
+VAR rows = ADDCOLUMNS(VALUES(tl_date[MonthNo]), "@a", [TL Actual M], "@b", [TL Budget M], "@v", [TL Variance M])
+RETURN IF([TL Valid Year] <> 1, "<p>Select one year.</p>",
+"<table style='width:100%;font-family:Segoe UI;font-size:13px;border-collapse:collapse;color:#18232b'><thead><tr><th>Month</th><th>Actual $M</th><th>Budget $M</th><th>Variance $M</th></tr></thead><tbody>" &
+ CONCATENATEX(rows, "<tr style='height:30px;border-bottom:1px solid #dde0df'><td>" & FORMAT(DATE([TL Year],tl_date[MonthNo],1),"MMM","en-US") & "</td><td style='text-align:right'>" & FORMAT([@a],"#,0.0") & "</td><td style='text-align:right'>" & FORMAT([@b],"#,0.0") & "</td><td style='text-align:right;color:" & IF([@v]>=0,"#cf493a","#526b7a") & "'>" & FORMAT([@v],"+#,0.0;−#,0.0;0.0") & "</td></tr>", "", tl_date[MonthNo], ASC) & "</tbody></table>")

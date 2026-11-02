@@ -1,0 +1,8 @@
+tl_date =
+ADDCOLUMNS (
+    CALENDAR ( DATE(2023,1,1), DATE(2025,12,31) ),
+    "Year", YEAR([Date]), "MonthNo", MONTH([Date]),
+    "MonthName", FORMAT([Date], "MMM", "en-US"),
+    "QuarterNo", QUARTER([Date]), "Quarter", "Q" & QUARTER([Date]),
+    "YearMonth", FORMAT([Date], "yyyy-MM")
+)

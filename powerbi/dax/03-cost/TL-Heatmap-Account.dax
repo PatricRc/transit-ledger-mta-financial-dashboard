@@ -1,0 +1,2 @@
+TL Heatmap Account =
+IF([TL Account Rank] <= 3 || SELECTEDVALUE(tl_account[Account]) = "Payroll", 1, 0)

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "name": "dataset"
+  },
+  "width": "container",
+  "height": 280,
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "gridColor": "#e3e3e3",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 12,
+      "titleFont": "Segoe UI"
+    },
+    "background": "white"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 3
+      },
+      "encoding": {
+        "y": {
+          "field": "TL Cash M",
+          "type": "quantitative",
+          "scale": {
+            "zero": true
+          },
+          "title": "Cash receipts · USD millions"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.MonthNo === 12",
+            "value": "#cf493a"
+          },
+          "value": "#778b98"
+        },
+        "tooltip": [
+          {
+            "field": "MonthName",
+            "type": "nominal"
+          },
+          {
+            "field": "TL Cash M",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -10,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "y": {
+          "field": "TL Cash M",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "TL Cash M",
+          "type": "quantitative",
+          "format": ",.0f"
+        }
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "MonthNo",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "labelExpr": "[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\"][datum.value - 1]"
+      }
+    }
+  }
+}

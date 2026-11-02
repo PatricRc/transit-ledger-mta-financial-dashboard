@@ -1,0 +1,5 @@
+TL Funding Card HTML =
+VAR valueText = "$" & FORMAT(ABS([TL Annual Funding Gap])/1000000,"#,0.0") & "M"
+VAR contextText = IF([TL Annual Funding Gap]>=0,"Less cash than accrued","More cash than accrued")
+RETURN IF([TL Valid Year] <> 1, "<p>Select one year.</p>",
+"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Cash / accrual</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>" & valueText & "</div><div style='font-size:12px;color:#53616a'>" & contextText & "</div>" & "<div style='height:55px;width:160px;margin-left:auto'>" & [TL Cash Spark HTML] & "</div>" & "</div>")

@@ -1,0 +1,482 @@
+[
+  {
+    "name": "TL Valid Year",
+    "expression": "INT ( HASONEVALUE(tl_date[Year]) )",
+    "folder": "01-base",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Year",
+    "expression": "SELECTEDVALUE(tl_date[Year])",
+    "folder": "01-base",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Actual",
+    "expression": "IF ( [TL Valid Year] = 1,\n CALCULATE ( SUM(tl_operations[amount]),\n    tl_operations[scenario] = \"Actual\",\n    tl_operations[expense_type] = \"NREIMB\",\n    tl_operations[type] = \"Total Expenses Before Non-Cash Liability Adjs.\"\n ) )",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Budget",
+    "expression": "IF ( [TL Valid Year] = 1,\n CALCULATE ( SUM(tl_operations[amount]),\n    tl_operations[scenario] = \"Adopted Budget\",\n    tl_operations[expense_type] = \"NREIMB\",\n    tl_operations[type] = \"Total Expenses Before Non-Cash Liability Adjs.\"\n ) )",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Variance",
+    "expression": "[TL Actual] - [TL Budget]",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Variance Pct",
+    "expression": "DIVIDE([TL Variance], [TL Budget])",
+    "folder": "01-base",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL Actual M",
+    "expression": "DIVIDE([TL Actual], 1000000)",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Budget M",
+    "expression": "DIVIDE([TL Budget], 1000000)",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Variance M",
+    "expression": "DIVIDE([TL Variance], 1000000)",
+    "folder": "01-base",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Actual",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Actual], REMOVEFILTERS(tl_date), tl_date[Year] = y))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL December Actual",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Actual], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Budget",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Budget], REMOVEFILTERS(tl_date), tl_date[Year] = y))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL December Budget",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Budget], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Variance",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Variance], REMOVEFILTERS(tl_date), tl_date[Year] = y))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL December Variance",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Variance], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12))",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Variance Pct",
+    "expression": "DIVIDE([TL Annual Variance], [TL Annual Budget])",
+    "folder": "02-performance",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL Account Index",
+    "expression": "DIVIDE([TL Actual], [TL Budget])",
+    "folder": "03-cost",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL Account Rank",
+    "expression": "VAR currentAccount = SELECTEDVALUE(tl_account[Account])\nVAR candidates = ADDCOLUMNS(ALL(tl_account[Account]), \"@v\", CALCULATE([TL Annual Variance]))\nVAR currentValue = [TL Annual Variance]\nRETURN IF(NOT ISBLANK(currentAccount) && NOT ISBLANK([TL Annual Actual]),\n  1 + COUNTROWS(FILTER(candidates, [@v] > currentValue || ([@v] = currentValue && tl_account[Account] < currentAccount))))",
+    "folder": "03-cost",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Top Five",
+    "expression": "IF([TL Account Rank] <= 5 && NOT ISBLANK([TL Account Rank]), 1, 0)",
+    "folder": "03-cost",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Heatmap Account",
+    "expression": "IF([TL Account Rank] <= 3 || SELECTEDVALUE(tl_account[Account]) = \"Payroll\", 1, 0)",
+    "folder": "03-cost",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Cost Actual Display",
+    "expression": "IF(SELECTEDVALUE(tl_cost_view[View], \"$ Amount\") = \"% Index\", [TL Account Index], [TL Actual M])",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Cost Budget Display",
+    "expression": "IF(SELECTEDVALUE(tl_cost_view[View], \"$ Amount\") = \"% Index\", 1, [TL Budget M])",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 1 Name",
+    "expression": "VAR a = ADDCOLUMNS(ALL(tl_account[Account]), \"@v\", CALCULATE([TL Annual Variance]))\nVAR topN = TOPN(1, a, [@v], DESC, tl_account[Account], ASC)\nRETURN MAXX(TOPN(1, topN, [@v], ASC, tl_account[Account], DESC), tl_account[Account])",
+    "folder": "03-cost",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 1 Variance",
+    "expression": "VAR a = [TL Driver 1 Name]\nRETURN CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 2 Name",
+    "expression": "VAR a = ADDCOLUMNS(ALL(tl_account[Account]), \"@v\", CALCULATE([TL Annual Variance]))\nVAR topN = TOPN(2, a, [@v], DESC, tl_account[Account], ASC)\nRETURN MAXX(TOPN(1, topN, [@v], ASC, tl_account[Account], DESC), tl_account[Account])",
+    "folder": "03-cost",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 2 Variance",
+    "expression": "VAR a = [TL Driver 2 Name]\nRETURN CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 3 Name",
+    "expression": "VAR a = ADDCOLUMNS(ALL(tl_account[Account]), \"@v\", CALCULATE([TL Annual Variance]))\nVAR topN = TOPN(3, a, [@v], DESC, tl_account[Account], ASC)\nRETURN MAXX(TOPN(1, topN, [@v], ASC, tl_account[Account], DESC), tl_account[Account])",
+    "folder": "03-cost",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 3 Variance",
+    "expression": "VAR a = [TL Driver 3 Name]\nRETURN CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 1 Peak Month",
+    "expression": "VAR a = [TL Driver 1 Name]\nVAR y = [TL Year]\nVAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)\nVAR rows = ADDCOLUMNS(months, \"@v\", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Variance], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m, REMOVEFILTERS(tl_account), tl_account[Account] = a))\nRETURN MAXX(TOPN(1, rows, [@v], DESC, tl_date[MonthNo], ASC), tl_date[MonthNo])",
+    "folder": "03-cost",
+    "formatString": "0"
+  },
+  {
+    "name": "TL Bridge Value M",
+    "expression": "VAR total = CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account))\nRETURN DIVIDE(SWITCH(SELECTEDVALUE(tl_bridge[Step]),\n 1, [TL Driver 1 Variance], 2, [TL Driver 2 Variance], 3, [TL Driver 3 Variance],\n 4, total - [TL Driver 1 Variance] - [TL Driver 2 Variance] - [TL Driver 3 Variance], 5, total), 1000000)",
+    "folder": "02-performance",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Bridge Label",
+    "expression": "SWITCH(SELECTEDVALUE(tl_bridge[Step]),1,[TL Driver 1 Name],2,[TL Driver 2 Name],3,[TL Driver 3 Name],4,\"Other net\",5,\"Net variance\")",
+    "folder": "02-performance",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cash",
+    "expression": "IF([TL Valid Year] = 1, CALCULATE(SUM(tl_subsidies[amount]),\n tl_subsidies[scenario] = \"Actual\", tl_subsidies[expense_type] = \"Cash\",\n tl_subsidies[type] = \"Total Dedicated Taxes & State and Local Subsidies\"))",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Cash M",
+    "expression": "DIVIDE([TL Cash],1000000)",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Cash",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Cash], REMOVEFILTERS(tl_date), tl_date[Year] = y))",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Accrual",
+    "expression": "IF([TL Valid Year] = 1, CALCULATE(SUM(tl_subsidies[amount]),\n tl_subsidies[scenario] = \"Actual\", tl_subsidies[expense_type] = \"NREIMB\",\n tl_subsidies[type] = \"Total Dedicated Taxes & State and Local Subsidies\"))",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Accrual M",
+    "expression": "DIVIDE([TL Accrual],1000000)",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Accrual",
+    "expression": "VAR y = [TL Year]\nRETURN IF([TL Valid Year] = 1, CALCULATE([TL Accrual], REMOVEFILTERS(tl_date), tl_date[Year] = y))",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Funding Gap",
+    "expression": "[TL Accrual] - [TL Cash]",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Funding Gap M",
+    "expression": "DIVIDE([TL Funding Gap],1000000)",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Coverage Pct",
+    "expression": "DIVIDE([TL Cash], [TL Accrual])",
+    "folder": "04-funding",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL Annual Funding Gap",
+    "expression": "[TL Annual Accrual] - [TL Annual Cash]",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Annual Coverage Pct",
+    "expression": "DIVIDE([TL Annual Cash], [TL Annual Accrual])",
+    "folder": "04-funding",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL December Cash Share Pct",
+    "expression": "VAR y = [TL Year]\nVAR decemberCash = CALCULATE([TL Cash], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = 12)\nRETURN DIVIDE(decemberCash, [TL Annual Cash])",
+    "folder": "04-funding",
+    "formatString": "0.0%;-0.0%;0.0%"
+  },
+  {
+    "name": "TL Funding Display",
+    "expression": "IF(SELECTEDVALUE(tl_funding_view[View], \"$ Gap\") = \"% Coverage\", [TL Coverage Pct], [TL Funding Gap M])",
+    "folder": "04-funding",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Funding Label",
+    "expression": "IF(SELECTEDVALUE(tl_funding_view[View], \"$ Gap\") = \"% Coverage\", FORMAT([TL Coverage Pct],\"0.0%\"), FORMAT([TL Funding Gap M],\"0.0;\u22120.0;0.0\") & \"M\")",
+    "folder": "04-funding",
+    "formatString": ""
+  },
+  {
+    "name": "TL Performance Title",
+    "expression": "IF([TL Valid Year] <> 1, \"Select one reporting year\", \"Expenses finished $\" & FORMAT(ABS([TL Annual Variance])/1000000,\"#,0.0\") & \"M \" & IF([TL Annual Variance]>=0,\"above\",\"below\") & \" adopted budget.\")",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cost Title",
+    "expression": "IF([TL Valid Year] <> 1, \"Select one reporting year\", [TL Driver 1 Name] & \" and \" & [TL Driver 2 Name] & \" added $\" & FORMAT(([TL Driver 1 Variance]+[TL Driver 2 Variance])/1000000,\"#,0.0\") & \"M above plan.\")",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Funding Title",
+    "expression": "IF([TL Valid Year] <> 1, \"Select one reporting year\", \"Cash was $\" & FORMAT(ABS([TL Annual Funding Gap])/1000000,\"#,0.0\") & \"M \" & IF([TL Annual Funding Gap]>=0,\"below\",\"above\") & \" accrued subsidies.\")",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Context",
+    "expression": "\"NYCT \u00b7 \" & FORMAT([TL Year],\"0\") & \" \u00b7 USD \u00b7 static 2023\u20132025 snapshot\"",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Source Note",
+    "expression": "\"Source: MTA Open Data. Operations: NYCT / NREIMB / same-year financial plan / before non-cash adjustments. Funding: selected gross subsidy category, not total cash flow. No audited reconciliation or causal inference.\"",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Performance Alt Text",
+    "expression": "[TL Performance Title] & \" \" & [TL Context] & \". \" & [TL Source Note]",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cost Alt Text",
+    "expression": "[TL Cost Title] & \" \" & [TL Context] & \". \" & [TL Source Note]",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Funding Alt Text",
+    "expression": "[TL Funding Title] & \" \" & [TL Context] & \". \" & [TL Source Note]",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Expenses Spark HTML",
+    "expression": "VAR y = [TL Year]\nVAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)\nVAR points = ADDCOLUMNS(months, \"@v\", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Actual M], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m))\nVAR low = MINX(points, [@v])\nVAR high = MAX(0, MAXX(points, [@v]))\nVAR span = MAX(high-low, 0.00001)\nVAR marks = CONCATENATEX(points,\n FORMAT((tl_date[MonthNo]-1)*14+2,\"0\", \"en-US\") & \",\" & FORMAT(53-48*DIVIDE([@v]-low,span),\"0.0\", \"en-US\"), \" \", tl_date[MonthNo], ASC)\nRETURN IF([TL Valid Year]=1, \"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 60' role='img' aria-label='Monthly trend, separate scale'><polyline points='\" & marks & \"' fill='none' stroke='#778b98' stroke-width='2.5'/></svg>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Variance Spark HTML",
+    "expression": "VAR y = [TL Year]\nVAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)\nVAR points = ADDCOLUMNS(months, \"@v\", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Variance M], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m))\nVAR low = MIN(0, MINX(points, [@v]))\nVAR high = MAX(0, MAXX(points, [@v]))\nVAR span = MAX(high-low, 0.00001)\nVAR marks = CONCATENATEX(points,\n VAR yy = 53 - 48 * DIVIDE([@v]-low,span)\n VAR zeroY = 53 - 48 * DIVIDE(-low,span)\n RETURN \"<rect x='\" & FORMAT((tl_date[MonthNo]-1)*14+2,\"0\", \"en-US\") & \"' y='\" & FORMAT(MIN(yy,zeroY),\"0.0\", \"en-US\") & \"' width='9' height='\" & FORMAT(MAX(1,ABS(yy-zeroY)),\"0.0\", \"en-US\") & \"' fill='\" & IF([@v]>=0,\"#cf493a\",\"#526b7a\") & \"' />\", \"\", tl_date[MonthNo], ASC)\nRETURN IF([TL Valid Year]=1, \"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 60' role='img' aria-label='Monthly variance, separate scale'>\" & marks & \"</svg>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cash Spark HTML",
+    "expression": "VAR y = [TL Year]\nVAR months = CALCULATETABLE(VALUES(tl_date[MonthNo]), REMOVEFILTERS(tl_date), tl_date[Year] = y)\nVAR points = ADDCOLUMNS(months, \"@v\", VAR m = tl_date[MonthNo] RETURN CALCULATE([TL Cash M], REMOVEFILTERS(tl_date), tl_date[Year] = y, tl_date[MonthNo] = m))\nVAR low = MINX(points, [@v])\nVAR high = MAX(0, MAXX(points, [@v]))\nVAR span = MAX(high-low, 0.00001)\nVAR marks = CONCATENATEX(points,\n FORMAT((tl_date[MonthNo]-1)*14+2,\"0\", \"en-US\") & \",\" & FORMAT(53-48*DIVIDE([@v]-low,span),\"0.0\", \"en-US\"), \" \", tl_date[MonthNo], ASC)\nRETURN IF([TL Valid Year]=1, \"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 60' role='img' aria-label='Monthly trend, separate scale'><polyline points='\" & marks & \"' fill='none' stroke='#778b98' stroke-width='2.5'/></svg>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Expense Card HTML",
+    "expression": "VAR valueText = \"$\" & FORMAT([TL Annual Actual]/1000000000,\"0.00\") & \"B\"\nVAR contextText = \"Actual before non-cash adjustments\"\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Operating expenses</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"<div style='height:55px;width:160px;margin-left:auto'>\" & [TL Expenses Spark HTML] & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Budget Card HTML",
+    "expression": "VAR valueText = \"$\" & FORMAT(ABS([TL Annual Variance])/1000000,\"#,0.0\") & \"M\"\nVAR contextText = FORMAT(ABS([TL Annual Variance Pct]),\"0.0%\") & IF([TL Annual Variance]>=0,\" above plan\",\" below plan\")\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#faeee9;border-top:3px solid #cf493a;color:#18232b'><div style='font-size:13px;font-weight:600'>Budget variance</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#cf493a'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"<div style='height:55px;width:160px;margin-left:auto'>\" & [TL Variance Spark HTML] & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL December Card HTML",
+    "expression": "VAR valueText = FORMAT([TL December Variance]/1000000,\"+$#,0.0;\u2212$#,0.0;$0.0\") & \"M\"\nVAR contextText = \"Actual $\" & FORMAT([TL December Actual]/1000000,\"#,0.0\") & \"M / plan $\" & FORMAT([TL December Budget]/1000000,\"#,0.0\") & \"M\"\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>December vs adopted budget</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"<div style='height:55px;width:160px;margin-left:auto'>\" & [TL Variance Spark HTML] & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 1 Card HTML",
+    "expression": "VAR valueText = FORMAT([TL Driver 1 Variance]/1000000,\"+$#,0.0;\u2212$#,0.0;$0.0\") & \"M\"\nVAR contextText = [TL Driver 1 Name]\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#faeee9;border-top:3px solid #cf493a;color:#18232b'><div style='font-size:13px;font-weight:600'>Driver 1 variance</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#cf493a'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 2 Card HTML",
+    "expression": "VAR valueText = FORMAT([TL Driver 2 Variance]/1000000,\"+$#,0.0;\u2212$#,0.0;$0.0\") & \"M\"\nVAR contextText = [TL Driver 2 Name]\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Driver 2 variance</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Funding Card HTML",
+    "expression": "VAR valueText = \"$\" & FORMAT(ABS([TL Annual Funding Gap])/1000000,\"#,0.0\") & \"M\"\nVAR contextText = IF([TL Annual Funding Gap]>=0,\"Less cash than accrued\",\"More cash than accrued\")\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Cash / accrual</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"<div style='height:55px;width:160px;margin-left:auto'>\" & [TL Cash Spark HTML] & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cash Card HTML",
+    "expression": "VAR valueText = \"$\" & FORMAT([TL Annual Cash]/1000000,\"#,0.0\") & \"M\"\nVAR contextText = \"Selected subsidy category\"\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Cash received</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Accrual Card HTML",
+    "expression": "VAR valueText = \"$\" & FORMAT([TL Annual Accrual]/1000000,\"#,0.0\") & \"M\"\nVAR contextText = FORMAT([TL Annual Coverage Pct],\"0.0%\") & \" annual cash coverage\"\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<div style='box-sizing:border-box;padding:20px;border-radius:15px;font-family:Segoe UI,Arial;background:#ffffff;color:#18232b'><div style='font-size:13px;font-weight:600'>Accrued subsidies</div><div style='font-size:38px;font-weight:700;margin:8px 0;color:#18232b'>\" & valueText & \"</div><div style='font-size:12px;color:#53616a'>\" & contextText & \"</div>\" & \"</div>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Performance Header HTML",
+    "expression": "VAR safeTitle = SUBSTITUTE(SUBSTITUTE(SUBSTITUTE([TL Performance Title], \"&\", \"&amp;\"), \"<\", \"&lt;\"), \">\", \"&gt;\")\nRETURN \"<div style='font-family:Segoe UI,Arial;color:#18232b'><div style='font-size:12px;letter-spacing:1px'>TRANSIT LEDGER / PERFORMANCE</div><h1 style='font-size:30px;margin:8px 0'>\" & safeTitle & \"</h1><div style='font-size:13px;color:#53616a'>\" & [TL Context] & \"</div></div>\"",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cost Header HTML",
+    "expression": "VAR safeTitle = SUBSTITUTE(SUBSTITUTE(SUBSTITUTE([TL Cost Title], \"&\", \"&amp;\"), \"<\", \"&lt;\"), \">\", \"&gt;\")\nRETURN \"<div style='font-family:Segoe UI,Arial;color:#18232b'><div style='font-size:12px;letter-spacing:1px'>TRANSIT LEDGER / COST</div><h1 style='font-size:30px;margin:8px 0'>\" & safeTitle & \"</h1><div style='font-size:13px;color:#53616a'>\" & [TL Context] & \"</div></div>\"",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Funding Header HTML",
+    "expression": "VAR safeTitle = SUBSTITUTE(SUBSTITUTE(SUBSTITUTE([TL Funding Title], \"&\", \"&amp;\"), \"<\", \"&lt;\"), \">\", \"&gt;\")\nRETURN \"<div style='font-family:Segoe UI,Arial;color:#18232b'><div style='font-size:12px;letter-spacing:1px'>TRANSIT LEDGER / FUNDING</div><h1 style='font-size:30px;margin:8px 0'>\" & safeTitle & \"</h1><div style='font-size:13px;color:#53616a'>\" & [TL Context] & \"</div></div>\"",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Investigation Note HTML",
+    "expression": "\"<div style='font-family:Segoe UI;color:#53616a;font-size:14px;padding:18px'><b>The next question</b><p>Recurring expense, settlement timing or an accounting adjustment? Variance locates pressure; management commentary is needed to establish cause.</p></div>\"",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Funding Note HTML",
+    "expression": "\"<div style='font-family:Segoe UI;color:#53616a;font-size:14px;padding:18px'><b>Timing matters</b><p>Check settlement timing and reporting adjustments. Cash and accrual are compared separately. This selected subsidy category is not total organizational cash flow.</p></div>\"",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 1 Actual",
+    "expression": "VAR a = [TL Driver 1 Name]\nRETURN CALCULATE([TL Annual Actual], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 1 Budget",
+    "expression": "VAR a = [TL Driver 1 Name]\nRETURN CALCULATE([TL Annual Budget], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 1 Spark HTML",
+    "expression": "VAR a = [TL Driver 1 Name]\nRETURN CALCULATE([TL Variance Spark HTML], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Driver 2 Actual",
+    "expression": "VAR a = [TL Driver 2 Name]\nRETURN CALCULATE([TL Annual Actual], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 2 Budget",
+    "expression": "VAR a = [TL Driver 2 Name]\nRETURN CALCULATE([TL Annual Budget], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "03-cost",
+    "formatString": "#,0.0;\u2212#,0.0;0.0"
+  },
+  {
+    "name": "TL Driver 2 Spark HTML",
+    "expression": "VAR a = [TL Driver 2 Name]\nRETURN CALCULATE([TL Variance Spark HTML], REMOVEFILTERS(tl_account), tl_account[Account] = a)",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Monthly Table HTML",
+    "expression": "VAR rows = ADDCOLUMNS(VALUES(tl_date[MonthNo]), \"@a\", [TL Actual M], \"@b\", [TL Budget M], \"@v\", [TL Variance M])\nRETURN IF([TL Valid Year] <> 1, \"<p>Select one year.</p>\",\n\"<table style='width:100%;font-family:Segoe UI;font-size:13px;border-collapse:collapse;color:#18232b'><thead><tr><th>Month</th><th>Actual $M</th><th>Budget $M</th><th>Variance $M</th></tr></thead><tbody>\" &\n CONCATENATEX(rows, \"<tr style='height:30px;border-bottom:1px solid #dde0df'><td>\" & FORMAT(DATE([TL Year],tl_date[MonthNo],1),\"MMM\",\"en-US\") & \"</td><td style='text-align:right'>\" & FORMAT([@a],\"#,0.0\") & \"</td><td style='text-align:right'>\" & FORMAT([@b],\"#,0.0\") & \"</td><td style='text-align:right;color:\" & IF([@v]>=0,\"#cf493a\",\"#526b7a\") & \"'>\" & FORMAT([@v],\"+#,0.0;\u2212#,0.0;0.0\") & \"</td></tr>\", \"\", tl_date[MonthNo], ASC) & \"</tbody></table>\")",
+    "folder": "05-html",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cost Chart Title",
+    "expression": "[TL Driver 1 Name] & \" had the largest upward dollar variance\"",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Heatmap Title",
+    "expression": "[TL Driver 1 Name] & \" pressure peaked in \" & FORMAT(DATE([TL Year],[TL Driver 1 Peak Month],1),\"MMM\",\"en-US\")",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Cash Chart Title",
+    "expression": "\"December supplied \" & FORMAT([TL December Cash Share Pct],\"0.0%\") & \" of annual cash receipts\"",
+    "folder": "06-text",
+    "formatString": ""
+  },
+  {
+    "name": "TL Coverage Title",
+    "expression": "\"Cash covered \" & FORMAT([TL Annual Coverage Pct],\"0.0%\") & \" of annual accrual\"",
+    "folder": "06-text",
+    "formatString": ""
+  }
+]

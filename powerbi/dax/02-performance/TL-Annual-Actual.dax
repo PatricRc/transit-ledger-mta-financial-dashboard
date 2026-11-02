@@ -1,0 +1,3 @@
+TL Annual Actual =
+VAR y = [TL Year]
+RETURN IF([TL Valid Year] = 1, CALCULATE([TL Actual], REMOVEFILTERS(tl_date), tl_date[Year] = y))

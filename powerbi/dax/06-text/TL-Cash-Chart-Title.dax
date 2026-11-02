@@ -1,0 +1,2 @@
+TL Cash Chart Title =
+"December supplied " & FORMAT([TL December Cash Share Pct],"0.0%") & " of annual cash receipts"

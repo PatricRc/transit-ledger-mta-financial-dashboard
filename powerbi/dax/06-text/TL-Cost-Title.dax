@@ -1,0 +1,2 @@
+TL Cost Title =
+IF([TL Valid Year] <> 1, "Select one reporting year", [TL Driver 1 Name] & " and " & [TL Driver 2 Name] & " added $" & FORMAT(([TL Driver 1 Variance]+[TL Driver 2 Variance])/1000000,"#,0.0") & "M above plan.")

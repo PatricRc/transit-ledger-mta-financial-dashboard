@@ -1,0 +1,3 @@
+TL Driver 1 Variance =
+VAR a = [TL Driver 1 Name]
+RETURN CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account), tl_account[Account] = a)

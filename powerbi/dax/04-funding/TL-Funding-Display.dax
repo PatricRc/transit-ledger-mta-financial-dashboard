@@ -1,0 +1,2 @@
+TL Funding Display =
+IF(SELECTEDVALUE(tl_funding_view[View], "$ Gap") = "% Coverage", [TL Coverage Pct], [TL Funding Gap M])

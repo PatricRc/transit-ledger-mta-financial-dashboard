@@ -1,0 +1,5 @@
+TL Bridge Value M =
+VAR total = CALCULATE([TL Annual Variance], REMOVEFILTERS(tl_account))
+RETURN DIVIDE(SWITCH(SELECTEDVALUE(tl_bridge[Step]),
+ 1, [TL Driver 1 Variance], 2, [TL Driver 2 Variance], 3, [TL Driver 3 Variance],
+ 4, total - [TL Driver 1 Variance] - [TL Driver 2 Variance] - [TL Driver 3 Variance], 5, total), 1000000)

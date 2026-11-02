@@ -1,0 +1,30 @@
+{
+  "name": "Transit Ledger Editorial",
+  "dataColors": [
+    "#cf493a",
+    "#778b98",
+    "#18232b",
+    "#526b7a",
+    "#d8e0e4"
+  ],
+  "background": "#f6f6f3",
+  "foreground": "#18232b",
+  "tableAccent": "#cf493a",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 20,
+      "color": "#18232b"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#53616a"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 36,
+      "color": "#18232b"
+    }
+  }
+}

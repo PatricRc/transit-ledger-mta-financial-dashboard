@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "name": "dataset"
+  },
+  "width": "container",
+  "height": 190,
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "gridColor": "#e3e3e3",
+      "labelFont": "Segoe UI",
+      "labelFontSize": 12,
+      "titleFont": "Segoe UI"
+    },
+    "background": "white"
+  },
+  "transform": [
+    {
+      "calculate": "min(max(datum[\"TL Coverage Pct\"],0),1)",
+      "as": "clipped"
+    },
+    {
+      "calculate": "1",
+      "as": "reference"
+    },
+    {
+      "calculate": "datum[\"TL Coverage Pct\"] > 1 ? \"Cash exceeds accrual · \" + datum[\"TL Funding Label\"] : datum[\"TL Funding Label\"]",
+      "as": "label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#faeee9",
+        "height": 15
+      },
+      "encoding": {
+        "x": {
+          "field": "reference",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              1
+            ]
+          },
+          "axis": {
+            "format": ".0%",
+            "title": "Track ends at 100%; read labels for cash above accrual"
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#778b98",
+        "height": 15
+      },
+      "encoding": {
+        "x": {
+          "field": "clipped",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "Quarter",
+            "type": "nominal"
+          },
+          {
+            "field": "TL Cash M",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "TL Accrual M",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "TL Coverage Pct",
+            "type": "quantitative",
+            "format": ".1%"
+          },
+          {
+            "field": "TL Funding Gap M",
+            "type": "quantitative",
+            "format": "+,.1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dy": -20,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "reference",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "Quarter",
+      "type": "nominal",
+      "sort": "ascending",
+      "axis": {
+        "title": null
+      }
+    }
+  }
+}

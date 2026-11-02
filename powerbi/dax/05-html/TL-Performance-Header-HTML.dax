@@ -1,0 +1,3 @@
+TL Performance Header HTML =
+VAR safeTitle = SUBSTITUTE(SUBSTITUTE(SUBSTITUTE([TL Performance Title], "&", "&amp;"), "<", "&lt;"), ">", "&gt;")
+RETURN "<div style='font-family:Segoe UI,Arial;color:#18232b'><div style='font-size:12px;letter-spacing:1px'>TRANSIT LEDGER / PERFORMANCE</div><h1 style='font-size:30px;margin:8px 0'>" & safeTitle & "</h1><div style='font-size:13px;color:#53616a'>" & [TL Context] & "</div></div>"

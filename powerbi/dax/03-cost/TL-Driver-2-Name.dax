@@ -1,0 +1,4 @@
+TL Driver 2 Name =
+VAR a = ADDCOLUMNS(ALL(tl_account[Account]), "@v", CALCULATE([TL Annual Variance]))
+VAR topN = TOPN(2, a, [@v], DESC, tl_account[Account], ASC)
+RETURN MAXX(TOPN(1, topN, [@v], ASC, tl_account[Account], DESC), tl_account[Account])

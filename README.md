@@ -56,7 +56,7 @@ Source: **Metropolitan Transportation Authority**, published on New York State O
 - [MTA Subsidies: Beginning 2019](https://data.ny.gov/Transportation/MTA-Subsidies-Beginning-2019/dfg9-c5rx)
 - [MTA Open Data program](https://www.mta.info/open-data)
 
-This repository contains a static aggregate snapshot prepared on November 1, 2026. The reporting years are 2023–2025; there is no live refresh. Raw source CSVs are not included.
+This repository contains a static aggregate snapshot prepared on November 1, 2026. The reporting years are 2023–2025; there is no live refresh. The original filtered source CSVs are included under [`data/raw/`](data/raw/), with download filters and checksums.
 
 **Operations filters:** agency NYCT; expense type NREIMB; fiscal year equals financial-plan year; Actual versus Adopted Budget; `Total Expenses Before Non-Cash Liability Adjs.` account grouping. Matching plan vintages avoids adding repeated forecasts from different publication years.
 
@@ -97,6 +97,7 @@ Replace the source snapshot with the client's governed finance data; agree on ac
 ```text
 index.html                    Standalone interactive dashboard
 data/dashboard-data.json      Aggregate snapshot used by the HTML
+data/raw/                     Original filtered CSVs, manifest and source notes
 screenshots/performance.png   Performance page
 screenshots/cost-pressure.png Cost pressure page
 screenshots/funding.png       Funding page

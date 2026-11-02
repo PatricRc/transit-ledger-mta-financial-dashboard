@@ -1,0 +1,64 @@
+{
+  "verified_on": "2026-11-01",
+  "files": [
+    {
+      "dataset": "yg77-3tkj",
+      "file": "operations_2023_2025.csv",
+      "source_url": "https://data.ny.gov/resource/yg77-3tkj.csv?%24where=fiscal_year+between+2023+and+2025+AND+financial_plan_year%3Dfiscal_year&%24limit=50000",
+      "rows": 37956,
+      "bytes": 6261659,
+      "sha256": "e53c0e260429c534787e875566ca2a50210526232c4fd1341c68220c3b57d2e9",
+      "filter": "fiscal_year between 2023 and 2025 AND financial_plan_year=fiscal_year",
+      "columns": [
+        "fiscal_year",
+        "month",
+        "scenario",
+        "financial_plan_year",
+        "expense_type",
+        "agency",
+        "type",
+        "subtype",
+        "general_ledger",
+        "amount"
+      ]
+    },
+    {
+      "dataset": "dfg9-c5rx",
+      "file": "subsidies_2023_2025.csv",
+      "source_url": "https://data.ny.gov/resource/dfg9-c5rx.csv?%24where=fiscal_year+between+2023+and+2025+AND+financial_plan_year%3Dfiscal_year&%24limit=50000",
+      "rows": 8100,
+      "bytes": 2120745,
+      "sha256": "a64bd1ad25624d1b281b27e89e8e92cb5f7c09a20995d2d6bf456337cb66d58b",
+      "filter": "fiscal_year between 2023 and 2025 AND financial_plan_year=fiscal_year",
+      "columns": [
+        "fiscal_year",
+        "month",
+        "scenario",
+        "financial_plan_year",
+        "expense_type",
+        "agency",
+        "type",
+        "subtype",
+        "general_ledger",
+        "account_category",
+        "account_subcategory_1",
+        "account_subcategory_2",
+        "amount"
+      ]
+    },
+    {
+      "dataset": "sayj-mze2",
+      "file": "ridership_2023_2025.csv",
+      "source_url": "https://data.ny.gov/resource/sayj-mze2.csv?%24where=date+%3E%3D+%272023-01-01T00%3A00%3A00%27+AND+date+%3C+%272026-01-01T00%3A00%3A00%27&%24limit=50000",
+      "rows": 8394,
+      "bytes": 351664,
+      "sha256": "d83037751cc0cf844ba9ec4ef65d5477e73e022ed6b766af5c8d2e19cbbe7919",
+      "filter": "date >= '2023-01-01T00:00:00' AND date < '2026-01-01T00:00:00'",
+      "columns": [
+        "date",
+        "mode",
+        "count"
+      ]
+    }
+  ]
+}

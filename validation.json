@@ -1,0 +1,31 @@
+{
+  "years": [
+    {
+      "[Year]": 2023,
+      "[Actual]": 9706451861.34,
+      "[Variance]": -2392250.4200000763,
+      "[Cash]": 1175186626.3300002,
+      "[Accrual]": 502326149.56,
+      "[Coverage]": 2.339489248886158
+    },
+    {
+      "[Year]": 2024,
+      "[Actual]": 10460622426.38,
+      "[Variance]": 513846726.6399956,
+      "[Cash]": 987058509.94,
+      "[Accrual]": 491291921.1100001,
+      "[Coverage]": 2.00910796112806
+    },
+    {
+      "[Year]": 2025,
+      "[Actual]": 10967556596.330002,
+      "[Variance]": 363704390.4900036,
+      "[Cash]": 933145188.3600001,
+      "[Accrual]": 947583413.1999999,
+      "[Coverage]": 0.9847631093591627
+    }
+  ],
+  "model_measure_errors": [],
+  "measure_count": 92,
+  "note": "Semantic-model checks; browser Performance Analyzer evidence is provided separately."
+}

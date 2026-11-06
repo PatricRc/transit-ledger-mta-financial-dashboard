@@ -1,0 +1,100 @@
+// TL Account Actual M
+TL Account Actual M =
+VAR account = SELECTEDVALUE(report_account[Account],"All accounts")
+RETURN IF(account="All accounts",[TL Actual M],CALCULATE([TL Actual M],TREATAS({account},gold_dim_operating_account[GeneralLedger])))
+
+// TL Account Budget M
+TL Account Budget M =
+VAR account = SELECTEDVALUE(report_account[Account],"All accounts")
+RETURN IF(account="All accounts",[TL Budget M],CALCULATE([TL Budget M],TREATAS({account},gold_dim_operating_account[GeneralLedger])))
+
+// TL Performance Line HTML
+TL Performance Line HTML =
+VAR yy = [TL Year]
+VAR months = ADDCOLUMNS(GENERATESERIES(1,12),
+ "@actual", VAR mm = [Value] RETURN CALCULATE([TL Account Actual M], REMOVEFILTERS(gold_dim_date), gold_dim_date[Year] = yy, gold_dim_date[MonthNumber] = mm),
+ "@budget", VAR mm = [Value] RETURN CALCULATE([TL Account Budget M], REMOVEFILTERS(gold_dim_date), gold_dim_date[Year] = yy, gold_dim_date[MonthNumber] = mm))
+VAR bottomValue = FLOOR(MINX(months,MIN([@actual],[@budget])),100)
+VAR topValue = CEILING(MAXX(months,MAX([@actual],[@budget])),100)
+VAR spanValue = MAX(topValue-bottomValue,100)
+VAR grid = CONCATENATEX(GENERATESERIES(0,3),
+ VAR amount = bottomValue + spanValue * DIVIDE([Value],3)
+ VAR py = 350 - 245 * DIVIDE(amount-bottomValue,spanValue)
+ RETURN "<path d='M65 " & FORMAT(py,"0.0","en-US") & " H830' stroke='#e3e3e3'/><text x='13' y='" & FORMAT(py+5,"0.0","en-US") & "' font-size='14' fill='#4F6A7A'>" & FORMAT(amount/1000,"0.00","en-US") & "B</text>","")
+VAR actualPoints = CONCATENATEX(months,FORMAT(65+([Value]-1)*69.545,"0.0","en-US") & "," & FORMAT(350-245*DIVIDE([@actual]-bottomValue,spanValue),"0.0","en-US")," ",[Value],ASC)
+VAR budgetPoints = CONCATENATEX(months,FORMAT(65+([Value]-1)*69.545,"0.0","en-US") & "," & FORMAT(350-245*DIVIDE([@budget]-bottomValue,spanValue),"0.0","en-US")," ",[Value],ASC)
+VAR dots = CONCATENATEX(months,
+ VAR px = 65+([Value]-1)*69.545
+ VAR py = 350-245*DIVIDE([@actual]-bottomValue,spanValue)
+ VAR monthName = FORMAT(DATE(yy,[Value],1),"MMM","en-US")
+ RETURN "<circle cx='" & FORMAT(px,"0.0","en-US") & "' cy='" & FORMAT(py,"0.0","en-US") & "' r='" & IF([Value]=12,"5","3") & "' fill='" & IF([Value]=12,"#D04A3A","#1B2F3F") & "'><title>" & monthName & ": Actual $" & FORMAT([@actual],"#,0.0","en-US") & "M / Budget $" & FORMAT([@budget],"#,0.0","en-US") & "M</title></circle><text x='" & FORMAT(px,"0.0","en-US") & "' y='378' text-anchor='middle' fill='#4F6A7A' font-size='14'>" & monthName & "</text>","",[Value],ASC)
+VAR decActual = MAXX(FILTER(months,[Value]=12),[@actual])
+VAR decBudget = MAXX(FILTER(months,[Value]=12),[@budget])
+VAR aY = 350-245*DIVIDE(decActual-bottomValue,spanValue)
+VAR budgetEndY = 350-245*DIVIDE(decBudget-bottomValue,spanValue)
+VAR peakMonth = MAXX(TOPN(1,months,[@actual],DESC,[Value],ASC),[Value])
+VAR lowMonth = MAXX(TOPN(1,months,[@actual],ASC,[Value],ASC),[Value])
+VAR septGap = MAXX(FILTER(months,[Value]=9),[@actual]-[@budget])
+VAR annotations = CONCATENATEX(FILTER(months,[Value]=peakMonth || [Value]=lowMonth),
+ VAR xx=65+([Value]-1)*69.545
+ VAR py=350-245*DIVIDE([@actual]-bottomValue,spanValue)
+ RETURN "<circle cx='" & xx & "' cy='" & FORMAT(py,"0.0","en-US") & "' r='7' fill='#D04A3A'/><rect x='" & MIN(730,MAX(65,xx-44)) & "' y='" & FORMAT(IF([Value]=peakMonth,py-31,py+11),"0.0","en-US") & "' width='88' height='24' rx='12' fill='#1B2F3F'/><text x='" & MIN(774,MAX(109,xx)) & "' y='" & FORMAT(IF([Value]=peakMonth,py-14,py+28),"0.0","en-US") & "' fill='white' font-size='16' text-anchor='middle'>" & IF([Value]=peakMonth,"PEAK","LOW") & "</text>","")
+RETURN IF([TL Valid Year]<>1,"<div>Select one reporting year.</div>",
+ "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 440' style='width:100%;height:auto;font-family:Segoe UI,Arial' role='img' aria-label='Monthly actual versus adopted budget expenses'><text x='24' y='35' font-size='23' font-weight='700' fill='#1B2F3F'>December selected account: $" & FORMAT(decActual,"#,0.0","en-US") & "M</text><text x='24' y='60' font-size='16' fill='#4F6A7A'>Jan–Dec " & yy & " · USD billions · zoomed axis · solid actual / dashed budget</text>" & grid &
+ "<polygon points='65,350 " & actualPoints & " 830,350' fill='#778b98' opacity='0.06'/><polyline points='" & budgetPoints & "' fill='none' stroke='#778b98' stroke-width='3' stroke-dasharray='6 5'/><polyline points='" & actualPoints & "' fill='none' stroke='#1B2F3F' stroke-width='3'/>" & dots & annotations &
+ "<path d='M835 " & FORMAT(aY,"0.0","en-US") & "h12' stroke='#1B2F3F'/><text x='852' y='" & FORMAT(aY+5,"0.0","en-US") & "' font-size='16' font-weight='700' fill='#1B2F3F'>Actual · " & FORMAT(decActual/1000,"0.00","en-US") & "B</text>" &
+ "<path d='M835 " & FORMAT(budgetEndY,"0.0","en-US") & "h12' stroke='#778b98'/><text x='852' y='" & FORMAT(budgetEndY+5,"0.0","en-US") & "' font-size='16' font-weight='700' fill='#4F6A7A'>Budget · " & FORMAT(decBudget/1000,"0.00","en-US") & "B</text><path d='M24 400H975' stroke='#e3e3e3'/><text x='24' y='425' font-size='16' fill='#4F6A7A'>September vs plan: " & FORMAT(septGap,"+$#,0.0;-$#,0.0") & "M · zoomed axis · use The Ledger for exact values</text></svg>")
+
+// TL Performance Bridge HTML
+TL Performance Bridge HTML =
+VAR d1 = DIVIDE([TL Driver 1 Variance],1000000)
+VAR d2 = DIVIDE([TL Driver 2 Variance],1000000)
+VAR d3 = DIVIDE([TL Driver 3 Variance],1000000)
+VAR net = DIVIDE(CALCULATE([TL Annual Variance],REMOVEFILTERS(gold_dim_operating_account)),1000000)
+VAR others = net-d1-d2-d3
+VAR steps = UNION(
+ ROW("@i",1,"@name",[TL Driver 1 Name],"@v",d1,"@start",0,"@end",d1),
+ ROW("@i",2,"@name",[TL Driver 2 Name],"@v",d2,"@start",d1,"@end",d1+d2),
+ ROW("@i",3,"@name",[TL Driver 3 Name],"@v",d3,"@start",d1+d2,"@end",d1+d2+d3),
+ ROW("@i",4,"@name","Other net","@v",others,"@start",d1+d2+d3,"@end",net),
+ ROW("@i",5,"@name","Net gap","@v",net,"@start",0,"@end",net))
+VAR lo = MIN(0,MINX(steps,MIN([@start],[@end])))
+VAR hi = MAX(0,MAXX(steps,MAX([@start],[@end])))
+VAR span = MAX(hi-lo,1)*1.2
+VAR zeroY = 340-225*DIVIDE(-lo,span)
+VAR marks = CONCATENATEX(steps,
+ VAR px = 34+([@i]-1)*116
+ VAR py = 340-225*DIVIDE(MAX([@start],[@end])-lo,span)
+ VAR ht = MAX(2,225*DIVIDE(ABS([@v]),span))
+ VAR safeName = SUBSTITUTE(SUBSTITUTE(SUBSTITUTE([@name],"&","&amp;"),"<","&lt;"),">","&gt;")
+ VAR shortName = SWITCH(TRUE(),CONTAINSSTRING([@name],"Paratransit"),"Paratransit",CONTAINSSTRING([@name],"Other Business"),"Other business",CONTAINSSTRING([@name],"Professional"),"Professional",safeName)
+ VAR color = IF([@i]=5,"#1B2F3F",IF([@v]>=0,"#D04A3A","#4F6A7A"))
+ RETURN "<rect x='" & FORMAT(px,"0","en-US") & "' y='" & FORMAT(py,"0.0","en-US") & "' width='68' height='" & FORMAT(ht,"0.0","en-US") & "' rx='4' fill='" & color & "'><title>" & safeName & ": " & FORMAT([@v],"+$#,0.0;−$#,0.0;$0.0","en-US") & "M</title></rect><text x='" & FORMAT(px+34,"0","en-US") & "' y='" & FORMAT(py-11,"0.0","en-US") & "' text-anchor='middle' font-size='15' font-weight='700' fill='" & color & "'>" & FORMAT([@v],"+#,0;−#,0;0","en-US") & "</text><text x='" & FORMAT(px+34,"0","en-US") & "' y='371' text-anchor='middle' font-size='16' fill='#4F6A7A'>" & shortName & "</text>","",[@i],ASC)
+RETURN IF([TL Valid Year]<>1,"<div>Select one reporting year.</div>",
+ "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 620 440' style='width:100%;height:auto;font-family:Segoe UI,Arial' role='img' aria-label='Expense variance bridge in millions'><text x='24' y='35' font-size='22' font-weight='700' fill='#1B2F3F'>What moved the budget?</text><text x='24' y='60' font-size='16' fill='#4F6A7A'>Three largest upward drivers plus all other accounts · USD millions</text><path d='M24 " & FORMAT(zeroY,"0.0","en-US") & "H600' stroke='#4F6A7A' stroke-width='1.4'/>" & marks & "<path d='M24 400H600' stroke='#e3e3e3'/><text x='24' y='425' font-size='16' fill='#4F6A7A'>Coral adds to the gap. Blue offsets it. Totals before rounding.</text></svg>")
+
+// TL Performance Dashboard HTML
+TL Performance Dashboard HTML =
+VAR y=[TL Year]
+VAR a=[TL Annual Actual]/1000000000
+VAR v=[TL Annual Variance]/1000000
+VAR dv=[TL December Variance]/1000000
+VAR line=[TL Performance Line HTML]
+VAR bridge=[TL Performance Bridge HTML]
+VAR lineClean=SUBSTITUTE(line,"style='width:100%;height:auto;font-family:Segoe UI,Arial'","style='font-family:Segoe UI,Arial'")
+VAR bridgeClean=SUBSTITUTE(bridge,"style='width:100%;height:auto;font-family:Segoe UI,Arial'","style='font-family:Segoe UI,Arial'")
+VAR lineSvg=SUBSTITUTE(lineClean,"viewBox='0 0 1000 440'","x='0' y='395' width='1000' height='440' viewBox='0 0 1000 440'")
+VAR bridgeSvg=SUBSTITUTE(bridgeClean,"viewBox='0 0 620 440'","x='1020' y='395' width='620' height='440' viewBox='0 0 620 440'")
+VAR years=ADDCOLUMNS(GENERATESERIES(2023,2025),"@expense",VAR yy=[Value] RETURN CALCULATE([TL Annual Actual],REMOVEFILTERS(gold_dim_date),gold_dim_date[Year]=yy)/1000000000)
+VAR yoy=CONCATENATEX(years,"<text x='" & 36+([Value]-2023)*260 & "' y='875' font-size='18' fill='#4F6A7A'>" & [Value] & " · $" & FORMAT([@expense],"0.00") & "B</text>","",[Value],ASC)
+RETURN IF([TL Valid Year]<>1,"Select one year",[_css] & "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1640 900' style='display:block;width:100%;height:auto' role='img' aria-label='Performance: operating expenses, budget variance, monthly actual and budget, and variance bridge'><rect width='1640' height='900' fill='#F4F4EE'/><text x='0' y='24' font-size='16' fill='#D04A3A' letter-spacing='1.5'>01 / PERFORMANCE · " & y & "</text><text x='0' y='78' font-size='42' font-family='Georgia' fill='#1B2F3F'>" & [TL Performance Title] & "</text><text x='0' y='115' font-size='18' fill='#4F6A7A'>NYCT · non-reimbursable operating expenses · same-year adopted budget</text><rect y='145' width='1640' height='185' rx='22' fill='#1B2F3F'/><path d='M800 145L980 330M1000 145L1180 330M1200 145L1380 330M1400 145L1580 330' stroke='#466171' stroke-width='3' opacity='.4'/><path d='M800 275H1600M900 215H1640' stroke='#5D7887' stroke-width='2' opacity='.25'/><text x='32' y='184' font-size='17' fill='#CBD8E1'>OPERATING EXPENSES</text><text x='32' y='246' font-size='52' fill='white' font-family='Georgia'>$" & FORMAT(a,"0.00") & "B</text><text x='32' y='292' font-size='18' fill='#CBD8E1'>Actual · Jan–Dec " & y & "</text><path d='M550 175V300M1100 175V300' stroke='#536B79'/><text x='582' y='184' font-size='17' fill='#CBD8E1'>BUDGET VARIANCE</text><text x='582' y='246' font-size='52' fill='white' font-family='Georgia'>" & FORMAT(v,"+$#,0.0;−$#,0.0") & "M</text><text x='582' y='292' font-size='18' fill='#CBD8E1'>" & FORMAT([TL Annual Variance Pct],"+0.0%;−0.0%") & " vs adopted plan</text><text x='1132' y='184' font-size='17' fill='#CBD8E1'>DECEMBER VS BUDGET</text><text x='1132' y='246' font-size='52' fill='white' font-family='Georgia'>" & FORMAT(dv,"+$#,0.0;−$#,0.0") & "M</text><text x='1132' y='292' font-size='18' fill='#CBD8E1'>Year-end timing deserves investigation</text><text x='0' y='374' font-size='18' fill='#4F6A7A'>MONTHLY DETAIL →</text><rect y='395' width='1000' height='440' rx='20' fill='white'/><rect x='1020' y='395' width='620' height='440' rx='20' fill='white'/>" & lineSvg & bridgeSvg & yoy & "<text x='850' y='875' font-size='16' fill='#4F6A7A'>Variance identifies where to ask questions; it does not establish cause.</text></svg>")
+
+// TL Month Tooltip HTML
+TL Month Tooltip HTML =
+VAR yy=[TL Year]
+VAR mm=SELECTEDVALUE(gold_dim_date[MonthNumber])
+VAR names=DISTINCT(SELECTCOLUMNS(FILTER(ALL(gold_dim_operating_account),gold_dim_operating_account[Type]="Total Expenses Before Non-Cash Liability Adjs."),"@name",gold_dim_operating_account[GeneralLedger]))
+VAR detail=ADDCOLUMNS(names,"@variance",VAR nm=[@name] RETURN CALCULATE([TL Actual M]-[TL Budget M],REMOVEFILTERS(gold_dim_operating_account),TREATAS({nm},gold_dim_operating_account[GeneralLedger])))
+VAR leaders=TOPN(3,detail,[@variance],DESC,[@name],ASC)
+VAR list=CONCATENATEX(leaders,"<div style='display:flex;justify-content:space-between;margin:12px 0'><span>"&SUBSTITUTE([@name],"&","&amp;")&"</span><b>"&FORMAT([@variance],"+$#,0.0;-$#,0.0")&"M</b></div>","",[@variance],DESC)
+RETURN [_css]&"<div class='tl' style='padding:24px;background:#F4F4EE;min-height:320px'><div style='color:#B53B2C;letter-spacing:2px'>MONTHLY FIELDNOTE</div><h2 style='font-family:Georgia;font-size:28px;margin:12px 0'>"&IF(ISBLANK(mm),"Select a month",FORMAT(DATE(yy,mm,1),"MMMM yyyy"))&"</h2><div style='display:flex;gap:30px;font-size:20px'><div>Actual<br><b>$"&FORMAT([TL Account Actual M],"#,0.0")&"M</b></div><div>Budget<br><b>$"&FORMAT([TL Account Budget M],"#,0.0")&"M</b></div><div>Variance<br><b>"&FORMAT([TL Account Actual M]-[TL Account Budget M],"+$#,0.0;-$#,0.0")&"M</b></div></div><h3>Top 3 upward account variances</h3>"&list&"<div style='color:#4F6A7A;font-size:14px'>Top drivers use all accounts for this month; variance does not establish cause.</div></div>"

@@ -1,0 +1,18 @@
+// TL Ledger HTML
+TL Ledger HTML =
+VAR yy=[TL Year]
+VAR n=SELECTEDVALUE(report_top_n[Top N],10)
+VAR selectedAccount=SELECTEDVALUE(report_account[Account],"All accounts")
+VAR accounts=FILTER(DISTINCT(SELECTCOLUMNS(FILTER(ALL(gold_dim_operating_account),gold_dim_operating_account[Type]="Total Expenses Before Non-Cash Liability Adjs."),"@account",gold_dim_operating_account[GeneralLedger])),selectedAccount="All accounts" || [@account]=selectedAccount)
+VAR amounts=ADDCOLUMNS(accounts,"@a",VAR ac=[@account] RETURN CALCULATE([TL Annual Actual],REMOVEFILTERS(gold_dim_operating_account),TREATAS({ac},gold_dim_operating_account[GeneralLedger]))/1000000,"@b",VAR ac=[@account] RETURN CALCULATE([TL Annual Budget],REMOVEFILTERS(gold_dim_operating_account),TREATAS({ac},gold_dim_operating_account[GeneralLedger]))/1000000)
+VAR ranked=ADDCOLUMNS(amounts,"@v",[@a]-[@b])
+VAR topRows=TOPN(n,FILTER(ranked,NOT ISBLANK([@a])),ABS([@v]),DESC,[@account],ASC)
+VAR headers=CONCATENATEX(GENERATESERIES(1,12),"<th>"&FORMAT(DATE(yy,[Value],1),"MMM")&"</th>","",[Value],ASC)
+VAR ledgerRows=CONCATENATEX(topRows,
+ VAR ac=[@account]
+ VAR av=[@a]
+ VAR bv=[@b]
+ VAR delta=[@v]
+ VAR monthCells=CONCATENATEX(GENERATESERIES(1,12),VAR mm=[Value] VAR v=CALCULATE([TL Actual M]-[TL Budget M],REMOVEFILTERS(gold_dim_date),gold_dim_date[Year]=yy,gold_dim_date[MonthNumber]=mm,REMOVEFILTERS(gold_dim_operating_account),TREATAS({ac},gold_dim_operating_account[GeneralLedger])) RETURN "<td style='background:"&IF(v>0,"#F8E2DC","#E6EEF1")&"'>"&FORMAT(v,"+0;-0;0")&"</td>","",[Value],ASC)
+ RETURN "<tr><td style='min-width:220px;font-weight:600'>"&SUBSTITUTE(ac,"&","&amp;")&"</td>"&monthCells&"<td>"&FORMAT(av,"#,0.0")&"</td><td>"&FORMAT(bv,"#,0.0")&"</td><td style='font-weight:700'>"&FORMAT(delta,"+0.0;-0.0;0.0")&"</td><td>"&IF(bv=0,"—",FORMAT(DIVIDE(delta,bv),"+0.0%;-0.0%;0.0%"))&"</td><td><span class='pill "&IF(delta>0.05,"up","down")&"'>"&IF(delta>0.05,"+ Over plan",IF(delta< -0.05,"− Under plan","= On plan"))&"</span></td></tr>","",ABS([@v]),DESC)
+RETURN [_css]&"<div class='tl' style='background:#F4F4EE;padding:20px;min-height:800px'><div style='color:#B53B2C;font-size:17px;letter-spacing:2px'>04 / THE LEDGER · "&yy&"</div><h1 style='font-size:46px;font-weight:400'>Every account. Every month. The exact difference.</h1><p class='muted' style='font-size:19px'>Top "&n&" accounts by absolute annual variance · monthly cells = actual minus budget ($M) · annual amounts in $M</p><div style='height:70px'></div><div style='background:white;border-radius:20px;padding:20px;overflow:auto'><table style='font-size:16px'><thead><tr><th>Account ↓ / Month →</th>"&headers&"<th>Actual</th><th>Budget</th><th>Variance</th><th>%</th><th>Status</th></tr></thead><tbody>"&ledgerRows&"</tbody></table></div><p class='muted' style='font-size:17px'>+ Coral = over plan · − Navy = under plan · totals calculated before rounding · variance does not establish cause</p></div>"
